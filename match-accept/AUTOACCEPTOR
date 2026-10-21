@@ -27,7 +27,7 @@ lockin = "lockin.png"  # Path to the image of the lock in button
 target_ban_name =  "caitlyn"
 target_pick_name = "aphelios"
 
-current_phase = "ban"
+current_phase = "accept"
 
 
 def find_and_confirm(reference, click=True):
@@ -114,6 +114,11 @@ while True:
 
     elif current_phase == "ban":
 
+        if find_and_confirm(accepticon, click=False): #if someone dodged, go back to accept phase
+            print("someone dodged, going back to accept phase")
+            current_phase = "accept"
+            continue
+
         if find_and_confirm(banachamp, click=False): #only moves mouse when ban icon shows up, so it wont move mouse if its not time to ban
             print("ban phase detected, moving mouse to ban icon")
 
@@ -140,6 +145,11 @@ while True:
     # ==========================================
             
     elif current_phase == "pick":
+
+        if find_and_confirm(accepticon, click=False): #if someone dodged, go back to accept phase
+            print("someone dodged, going back to accept phase")
+            current_phase = "accept"
+            continue
 
         if find_and_confirm(pickachamp, click=False): #find the pick search button and click it
             print("pick phase detected, moving mouse to pick icon")
