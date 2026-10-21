@@ -11,21 +11,34 @@ import pyautogui
 import cv2
 import numpy as np
 
-accepticon = "accept.png"  # Path to the image of the accept button
+import os
+import sys
 
-banachamp = "banachamp.png"  # Path to the image of the ban button 
-bansearch = "bansearch.png"  # Path to the image of the ban search button
-banicon = "caiticon.png"  # Path to the image of the ban icon
-banconfirm = "ban.png"  # Path to the image of the ban confirm button
+# This helper ensures PyInstaller and the script always look in the correct folder for your images
+def resource_path(relative_path):
+    """ Get absolute path to resource, works for dev and for PyInstaller """
+    try:
+        # PyInstaller creates a temp folder and stores path in _MEIPASS
+        base_path = sys._MEIPASS
+    except Exception:
+        base_path = os.path.abspath(".")
+    return os.path.join(base_path, relative_path)
 
-pickachamp = "pickachamp.png"  # Path to the image of the pick champion button
-picksearch = "picksearch.png"  # Path to the image of the pick search button
-pickicon = "apheicon.png"  # Path to the image of the pick icon
-lockin = "lockin.png"  # Path to the image of the lock in button
+# --- CONFIG & FILES (Wrapped with resource_path) ---
+accepticon = resource_path("accept.png")  
+banachamp = resource_path("banchamp.png")  
+bansearch = resource_path("bansearch.png")  
+banicon = resource_path("caiticon.png")     
+banconfirm = resource_path("ban.png")       
+
+pickachamp = resource_path("pickchamp.png")  
+picksearch = resource_path("picksearch.png")  
+pickicon = resource_path("apheicon.png")
+lockin = resource_path("lockin.png")
 
 #made to be for adc playing tbh
-target_ban_name =  "caitlyn"
-target_pick_name = "aphelios"
+target_ban_name =  resource_path("caitlyn.png")
+target_pick_name = resource_path("aphelios.png")
 
 current_phase = "accept"
 
