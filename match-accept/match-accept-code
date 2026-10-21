@@ -28,7 +28,6 @@ pickachamp = "pickchamp.png"  # Path to the image of the pick champion button
 target_ban_name =  "caitlyn"
 target_pick_name = "aphelios"
 
-current_phase = "ban"
 
 def find_and_confirm(reference):
     # Take a screenshot of the screen
@@ -108,10 +107,11 @@ while True:
 
     elif current_phase == "ban":
 
-        if find_and_confirm(bansearch): #find the ban search button and click it
+        if find_and_confirm(banachamp): #only moves mouse when ban icon shows up, so it wont move mouse if its not time to ban
 
-            time.sleep(0.5)
-            pyautogui.typewrite(target_ban_name, interval=0.1) #type the name of the champion to ban
+            find_and_confirm(bansearch) #find the ban search button and click it
+            for letter in target_ban_name:
+                pyautogui.press(letter) #type the name of the champion to ban
 
             time.sleep(0.5)
             find_and_confirm(banicon) #find the ban icon and click it
@@ -130,10 +130,12 @@ while True:
             
     elif current_phase == "pick":
 
-        if find_and_confirm(picksearch): #find the pick search button and click it
+        if find_and_confirm(pickachamp): #find the pick search button and click it
 
+            find_and_confirm(picksearch) #find the pick search button and click it
             time.sleep(0.5)
-            pyautogui.typewrite(target_pick_name, interval=0.1) #type the name of the champion to pick
+            for letter in target_pick_name:
+                pyautogui.press(letter) #type the name of the champion to pick
 
             time.sleep(0.5)
             find_and_confirm(pickicon) #find the pick icon and click it
