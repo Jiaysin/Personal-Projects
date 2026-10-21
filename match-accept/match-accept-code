@@ -12,24 +12,28 @@ import numpy as np
 
 accepticon = "accept.png"  # Path to the image of the accept button
 
+banachamp = "banachamp.png"  # Path to the image of the ban button 
 bansearch = "bansearch.png"  # Path to the image of the ban search button
 banicon = "caiticon.png"  # Path to the image of the ban icon
 banconfirm = "ban.png"  # Path to the image of the ban confirm button
 
+pickachamp = "pickachamp.png"  # Path to the image of the pick champion button
 picksearch = "picksearch.png"  # Path to the image of the pick search button
 pickicon = "apheicon.png"  # Path to the image of the pick icon
 lockin = "lockin.png"  # Path to the image of the lock in button
 
-#retired icons bc im setting the phase to the next after getting it
-banachamp = "ban.png"  # Path to the image of the ban button 
-pickachamp = "pickchamp.png"  # Path to the image of the pick champion button
+
+
+
 
 #made to be for adc playing tbh
 target_ban_name =  "caitlyn"
 target_pick_name = "aphelios"
 
+current_phase = "ban"
 
-def find_and_confirm(reference):
+
+def find_and_confirm(reference, click=True):
     # Take a screenshot of the screen
     screenshot = pyautogui.screenshot()
     frame_phase = np.array(screenshot) #turn the screenshot into an array
@@ -45,7 +49,7 @@ def find_and_confirm(reference):
     w, h = templateaccept.shape[::-1]
 
     res = cv2.matchTemplate(gray_screenshot, templateaccept, cv2.TM_CCOEFF_NORMED) #compare the matching/comparison
-    threshold = 0.85 #85% match for screenshot comparison
+    threshold = 0.90 #90% match for screenshot comparison
 
     coords = np.where(res >= threshold) #get the coordinates of the match
 
@@ -54,8 +58,12 @@ def find_and_confirm(reference):
             center_x = point[0] + w // 2 #center x of the accept button
             center_y = point[1] + h // 2 #center y of the accept button
 
-            pyautogui.click(center_x, center_y) #click the accept button
-            print(f"Clicked {reference} at ({center_x}, {center_y})")
+            if click:
+                pyautogui.click(center_x, center_y) #click the accept button
+                print(f"Clicked {reference} at ({center_x}, {center_y})")
+            else:
+                print(f"detected {reference} at ({center_x}, {center_y}) but did not click")
+
 
             return True #return true if the button was found and clicked
     
@@ -70,6 +78,8 @@ def find_and_confirm(reference):
 #first part was before i thought abt making it a function. but i left it to know where i started.
 
 while True:
+
+    print(f"Current phase: {current_phase}")
 
     if current_phase == "accept":
         # Take a screenshot of the screen
@@ -107,22 +117,26 @@ while True:
 
     elif current_phase == "ban":
 
-        if find_and_confirm(banachamp): #only moves mouse when ban icon shows up, so it wont move mouse if its not time to ban
+        if find_and_confirm(banachamp, click=False): #only moves mouse when ban icon shows up, so it wont move mouse if its not time to ban
+            print("ban phase detected, moving mouse to ban icon")
 
-            find_and_confirm(bansearch) #find the ban search button and click it
-            for letter in target_ban_name:
-                pyautogui.press(letter) #type the name of the champion to ban
+            if find_and_confirm(bansearch): #find the ban search button and click it
+                for letter in target_ban_name:
+                    pyautogui.press(letter) #type the name of the champion to ban
 
-            time.sleep(0.5)
-            find_and_confirm(banicon) #find the ban icon and click it
+                time.sleep(0.5)
+                find_and_confirm(banicon) #find the ban icon and click it
 
-            time.sleep(0.5)
-            find_and_confirm(banconfirm) #find the ban confirm button and click it
-            print("banned" + target_ban_name)
+                time.sleep(0.5)
+                find_and_confirm(banconfirm) #find the ban confirm button and click it
+                print("banned" + target_ban_name)
 
 
-            current_phase = "pick" #change the phase to pick
-            time.sleep(5)
+                current_phase = "pick" #change the phase to pick
+                time.sleep(5)
+
+        else:
+            print("ban phase not detected, waiting for ban icon to appear")
 
     # ==========================================
     # PHASE 3: PICK THE CHAMPION
@@ -130,19 +144,21 @@ while True:
             
     elif current_phase == "pick":
 
-        if find_and_confirm(pickachamp): #find the pick search button and click it
+        if find_and_confirm(pickachamp, click=False): #find the pick search button and click it
+            print("pick phase detected, moving mouse to pick icon")
 
-            find_and_confirm(picksearch) #find the pick search button and click it
-            time.sleep(0.5)
-            for letter in target_pick_name:
-                pyautogui.press(letter) #type the name of the champion to pick
+            if find_and_confirm(picksearch): #find the pick search button and click it
+                time.sleep(0.5)
 
-            time.sleep(0.5)
-            find_and_confirm(pickicon) #find the pick icon and click it
+                for letter in target_pick_name:
+                    pyautogui.press(letter) #type the name of the champion to pick
 
-            time.sleep(0.5)
-            find_and_confirm(lockin) #find the lock in button and click it
-            print("selected" + target_pick_name)
+                time.sleep(0.5)
+                find_and_confirm(pickicon) #find the pick icon and click it
+
+                time.sleep(0.5)
+                find_and_confirm(lockin) #find the lock in button and click it
+                print("selected" + target_pick_name)
 
             current_phase = "done" #change the phase to done
 
