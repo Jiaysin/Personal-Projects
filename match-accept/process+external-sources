@@ -1,0 +1,12 @@
+primarily used these sources for coding:
+
+https://www.geeksforgeeks.org/python/python-opencv-cheat-sheet/
+gemini for code questions and building
+    - i had the main ideas but didnt have the knowledge to build on it myself, so i set up pseudo code and asked Gemini for assistance on building the code.
+    - asked many follow up questions on which line did what, and referenced myself to the GeeksforGeeks website to understand the code further
+
+Beginning process:
+- setting up psuedo code and how i want the functioning to work
+- i could have started with connecting to the League API but it felt too advanced and confusing for me
+- i wanted to focus on taking screenshots of the main monitor and looking for an "accept" icon
+- after accepting, i want it to ban a certain champion/character and then select a champion for me

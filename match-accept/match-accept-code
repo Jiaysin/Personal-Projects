@@ -1,0 +1,156 @@
+#started code with pip install pyautogui opencv-python in terminal
+#might have to do pip install --upgrade pyautogui pyscreeze pillow
+
+#do this: cd match-accept  to move terminal into match accept code
+
+
+
+import time #for timers
+import pyautogui
+import cv2
+import numpy as np
+
+accepticon = "accept.png"  # Path to the image of the accept button
+
+bansearch = "bansearch.png"  # Path to the image of the ban search button
+banicon = "caiticon.png"  # Path to the image of the ban icon
+banconfirm = "ban.png"  # Path to the image of the ban confirm button
+
+picksearch = "picksearch.png"  # Path to the image of the pick search button
+pickicon = "apheicon.png"  # Path to the image of the pick icon
+lockin = "lockin.png"  # Path to the image of the lock in button
+
+#retired icons bc im setting the phase to the next after getting it
+banachamp = "ban.png"  # Path to the image of the ban button 
+pickachamp = "pickchamp.png"  # Path to the image of the pick champion button
+
+#made to be for adc playing tbh
+target_ban_name =  "caitlyn"
+target_pick_name = "aphelios"
+
+current_phase = "ban"
+
+def find_and_confirm(reference):
+    # Take a screenshot of the screen
+    screenshot = pyautogui.screenshot()
+    frame_phase = np.array(screenshot) #turn the screenshot into an array
+    
+    gray_screenshot = cv2.cvtColor(frame_phase, cv2.COLOR_RGB2GRAY) #convert the screenshot to grayscale    
+    templateaccept = cv2.imread(reference, cv2.IMREAD_GRAYSCALE)
+    
+       
+    if templateaccept is None:
+        print(f"Error: Could not load template image '{reference}'. Please check the file path.")
+        return False
+        
+    w, h = templateaccept.shape[::-1]
+
+    res = cv2.matchTemplate(gray_screenshot, templateaccept, cv2.TM_CCOEFF_NORMED) #compare the matching/comparison
+    threshold = 0.85 #85% match for screenshot comparison
+
+    coords = np.where(res >= threshold) #get the coordinates of the match
+
+    if len(coords[0]) > 0: #if there is a match
+        for point in zip(*coords[::-1]): #loop through the coordinates
+            center_x = point[0] + w // 2 #center x of the accept button
+            center_y = point[1] + h // 2 #center y of the accept button
+
+            pyautogui.click(center_x, center_y) #click the accept button
+            print(f"Clicked {reference} at ({center_x}, {center_y})")
+
+            return True #return true if the button was found and clicked
+    
+    
+    return False #return if it wasnt there was no match found
+
+
+
+
+
+
+#first part was before i thought abt making it a function. but i left it to know where i started.
+
+while True:
+
+    if current_phase == "accept":
+        # Take a screenshot of the screen
+        screenshot_accept = pyautogui.screenshot()
+        frame_accept = np.array(screenshot_accept) #turn the screenshot into an array
+
+        gray_screenshot = cv2.cvtColor(frame_accept, cv2.COLOR_RGB2GRAY) #convert the screenshot to grayscale    
+        templateaccept = cv2.imread(accepticon, cv2.IMREAD_GRAYSCALE)
+
+        w, h = templateaccept.shape[::-1]
+
+    # ==========================================
+    # PHASE 1: ACCEPT THE MATCH
+    # ==========================================
+        #NOTE: ACCEPT ONLY WORKS IF ITS THE SAME RESOLUTION
+
+        res = cv2.matchTemplate(gray_screenshot, templateaccept, cv2.TM_CCOEFF_NORMED) #compare the matching/comparison
+        threshold = 0.8 #80% match for screenshot comparison
+
+        coords = np.where(res >= threshold) #get the coordinates of the match
+
+        if len(coords[0]) > 0: #if there is a match
+            for point in zip(*coords[::-1]): #loop through the coordinates
+                center_x = point[0] + w // 2 #center x of the accept button
+                center_y = point[1] + h // 2 #center y of the accept button
+                pyautogui.click(center_x, center_y) #click the accept button
+
+                current_phase = "ban" #change the phase to ban
+                time.sleep(10) #let the game buffer into lobby
+
+
+    # ==========================================
+    # PHASE 2: BAN THE CHAMPION
+    # ==========================================
+
+    elif current_phase == "ban":
+
+        if find_and_confirm(bansearch): #find the ban search button and click it
+
+            time.sleep(0.5)
+            pyautogui.typewrite(target_ban_name, interval=0.1) #type the name of the champion to ban
+
+            time.sleep(0.5)
+            find_and_confirm(banicon) #find the ban icon and click it
+
+            time.sleep(0.5)
+            find_and_confirm(banconfirm) #find the ban confirm button and click it
+            print("banned" + target_ban_name)
+
+
+            current_phase = "pick" #change the phase to pick
+            time.sleep(5)
+
+    # ==========================================
+    # PHASE 3: PICK THE CHAMPION
+    # ==========================================
+            
+    elif current_phase == "pick":
+
+        if find_and_confirm(picksearch): #find the pick search button and click it
+
+            time.sleep(0.5)
+            pyautogui.typewrite(target_pick_name, interval=0.1) #type the name of the champion to pick
+
+            time.sleep(0.5)
+            find_and_confirm(pickicon) #find the pick icon and click it
+
+            time.sleep(0.5)
+            find_and_confirm(lockin) #find the lock in button and click it
+            print("selected" + target_pick_name)
+
+            current_phase = "done" #change the phase to done
+
+    elif current_phase == "done":
+        print("All phases completed. Exiting the loop.")
+        break  # Exit the loop when done
+
+
+
+
+
+    # Wait for 3 seconds before taking the next screenshot
+    time.sleep(1)
