@@ -24,6 +24,8 @@ def resource_path(relative_path):
         base_path = os.path.abspath(".")
     return os.path.join(base_path, relative_path)
 
+#---------------------------------------------------------------------------------------------------------
+
 # --- CONFIG & FILES (Wrapped with resource_path) ---
 accepticon = resource_path("accept.png")  
 banachamp = resource_path("banchamp.png")  
@@ -40,8 +42,7 @@ lockin = resource_path("lockin.png")
 target_ban_name =  resource_path("caitlyn.png")
 target_pick_name = resource_path("aphelios.png")
 
-current_phase = "accept"
-
+#---------------------------------------------------------------------------------------------------------
 
 def find_and_confirm(reference, click=True):
     # Take a screenshot of the screen
@@ -80,16 +81,16 @@ def find_and_confirm(reference, click=True):
     
     return False #return if it wasnt there was no match found
 
+#---------------------------------------------------------------------------------------------------------
 
-
+current_phase = "accept"
+print("Starting in current phase: Accept")
 
 
 
 #first part was before i thought abt making it a function. but i left it to know where i started.
 
 while True:
-
-    print(f"Current phase: {current_phase}")
 
     if current_phase == "accept":
         # Take a screenshot of the screen

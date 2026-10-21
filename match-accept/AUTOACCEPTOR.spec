@@ -5,7 +5,7 @@ a = Analysis(
     ['AUTOACCEPTOR'],
     pathex=[],
     binaries=[],
-    datas=[],
+    datas=[('*.png', '.')],
     hiddenimports=[],
     hookspath=[],
     hooksconfig={},
