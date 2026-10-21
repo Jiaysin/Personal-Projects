@@ -1,5 +1,6 @@
 #started code with pip install pyautogui opencv-python in terminal
 #might have to do pip install --upgrade pyautogui pyscreeze pillow
+#turn into exe: pip install pyinstaller
 
 #do this: cd match-accept  to move terminal into match accept code
 
@@ -21,10 +22,6 @@ pickachamp = "pickachamp.png"  # Path to the image of the pick champion button
 picksearch = "picksearch.png"  # Path to the image of the pick search button
 pickicon = "apheicon.png"  # Path to the image of the pick icon
 lockin = "lockin.png"  # Path to the image of the lock in button
-
-
-
-
 
 #made to be for adc playing tbh
 target_ban_name =  "caitlyn"
