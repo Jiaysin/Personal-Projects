@@ -1,0 +1,43 @@
+project ideas:
+- auto match acceptor
+    if on the rift: 
+        auto ban
+        auto pick
+        maybe auto rune change?
+
+        how:
+            take photos until an "accept" icon pops up, make mouse press it
+            when screen goes red, search up champion name
+            if icon is already grey, pick a new champion
+
+            once red screen is gone, select champ
+
+        need:
+            screenshots
+            read the screen
+            have mouse input
+
+- keyboard just for league/emotes
+    kinda like a steamdeck
+
+    need:
+        3d printed base
+        keycaps + switches
+        esp32
+        input for switches
+        software to take in inputs for each keystroke
+
+        possible inputs:
+            CTRL 1-4 taunt, dance, etc
+            mastery
+            all chat gg
+            map checker (bc i dont have any F keys)
+
+joke idea; auto stroker with dennie and ant
+    - split work between coding and cad design
+    - need multiple settings (speeds)
+    - diameter adjustment?
+    - length adjustment?
+    - gear spinning mechanism / piston action
+    - handheld or connection to desk (C-clamp design)
+
