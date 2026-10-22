@@ -1,6 +1,6 @@
 #started code with pip install pyautogui opencv-python in terminal
 #might have to do pip install --upgrade pyautogui pyscreeze pillow
-#turn into exe: pip install pyinstaller
+#turn into exe: python -m PyInstaller --noconsole --onefile --add-data "*.png;." AUTOACCEPTOR
 
 #do this: cd match-accept  to move terminal into match accept code
 
@@ -28,12 +28,12 @@ def resource_path(relative_path):
 
 # --- CONFIG & FILES (Wrapped with resource_path) ---
 accepticon = resource_path("accept.png")  
-banachamp = resource_path("banchamp.png")  
+banachamp = resource_path("banachamp.png")  
 bansearch = resource_path("bansearch.png")  
 banicon = resource_path("caiticon.png")     
 banconfirm = resource_path("ban.png")       
 
-pickachamp = resource_path("pickchamp.png")  
+pickachamp = resource_path("pickachamp.png")  
 picksearch = resource_path("picksearch.png")  
 pickicon = resource_path("apheicon.png")
 lockin = resource_path("lockin.png")
