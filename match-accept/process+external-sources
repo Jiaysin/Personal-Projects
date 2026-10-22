@@ -13,3 +13,8 @@ Beginning process:
 - i could have started with connecting to the League API but it felt too advanced and confusing for me
 - i wanted to focus on taking screenshots of the main monitor and looking for an "accept" icon
 - after accepting, i want it to ban a certain champion/character and then select a champion for me
+
+Imports used:
+- OpenCV - computer vision library to template matching (the eyes of the program)
+- PyAutoGUI - automation and input library to move cursor and have keyboard inputs (the hands of the program)
+- PyInstaller - deployment tool to bundle the code into an exe file (the suit of the program)
