@@ -1,6 +1,6 @@
 #started code with pip install pyautogui opencv-python in terminal
 #might have to do pip install --upgrade pyautogui pyscreeze pillow
-#turn into exe: python -m PyInstaller --noconsole --onefile --add-data "*.png;." AUTOACCEPTOR
+#turn into exe w/ no: python -m PyInstaller --onefile --add-data "*.png;." AUTOACCEPTOR
 
 #do this: cd match-accept  to move terminal into match accept code
 
@@ -39,8 +39,8 @@ pickicon = resource_path("apheicon.png")
 lockin = resource_path("lockin.png")
 
 #made to be for adc playing tbh
-target_ban_name =  resource_path("caitlyn.png")
-target_pick_name = resource_path("aphelios.png")
+target_ban_name =  "caitlyn"
+target_pick_name = "aphelios"
 
 #---------------------------------------------------------------------------------------------------------
 
